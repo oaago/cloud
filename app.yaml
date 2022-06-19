@@ -1,0 +1,25 @@
+server:
+  name: vip-work
+  port: 9932
+  env: local
+  version: 1.0
+  weight: 1
+etcd:
+  addr: 127.0.0.1:2379
+mysql:
+  default: root:root@tcp(127.0.0.1:3306)/a
+  b: root:root@tcp(121.40.183.33:3308)/b
+  c: root:root@tcp(121.40.183.33:3308)/c
+nacos:
+  ipaddr: ops.laodianhuang.cn
+  logdir: ./nacos
+  cachedir: ./nacos
+  dataid: vip-work
+  group: vip-work
+logger:
+  path: ./logs
+  name: vip-work
+redis:
+  addr: 121.40.183.33:6937
+  password: TBQ1pCChcKI4OgkSts
+  db: 14
