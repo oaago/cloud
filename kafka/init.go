@@ -2,8 +2,10 @@ package kafka
 
 import (
 	"encoding/json"
+
 	"github.com/Shopify/sarama"
-	cluster "github.com/bsm/sarama-cluster"
+
+	// cluster "github.com/bsm/sarama-cluster"
 	"github.com/oaago/component/config"
 )
 
@@ -31,13 +33,13 @@ type Consumer struct {
 	GroupId string   `yaml:"groupId"`
 }
 
-var ConsumerGroup *cluster.Consumer
+// var ConsumerGroup *cluster.Consumer
 var ConsumerOptions = &Consumer{}
 var ProducerOptions = &Producer{}
 
 var ProducerList *ProducerType
 
-type ConsumerCallback func(*sarama.ConsumerMessage, *cluster.Consumer)
+// type ConsumerCallback func(*sarama.ConsumerMessage, *cluster.Consumer)
 
 func init() {
 	consumerStr := config.Op.GetString("kafka.consumer")

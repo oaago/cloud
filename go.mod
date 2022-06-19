@@ -5,7 +5,6 @@ go 1.18
 require (
 	github.com/Shopify/sarama v1.34.1
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.4+incompatible
-	github.com/bsm/sarama-cluster v2.1.15+incompatible
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-redis/redis v6.15.9+incompatible
