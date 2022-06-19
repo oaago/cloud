@@ -14,6 +14,8 @@ func NewConsumer(callback ConsumerCallback) {
 	config := cluster.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Group.Return.Notifications = true
+	config.Consumer.Offsets.AutoCommit.Enable = true
+	config.Consumer.Offsets.AutoCommit.Interval = 1 * time.Second
 	config.Consumer.Offsets.CommitInterval = 1 * time.Second
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest //初始从最新的offset开始
 	var err error
@@ -36,5 +38,6 @@ func NewConsumer(callback ConsumerCallback) {
 	}()
 	for msg := range ConsumerGroup.Messages() {
 		callback(msg, ConsumerGroup)
+	
 	}
 }
