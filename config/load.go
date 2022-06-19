@@ -2,9 +2,10 @@ package config
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var Op *viper.Viper
@@ -22,6 +23,10 @@ func init() {
 		fmt.Println(e)
 	})
 	if err := Op.ReadInConfig(); err != nil {
-		fmt.Println(err.Error(), "获取配置文件失败")
+		if len(os.Args) > 2 {
+			if os.Args[0] != "oaacli" {
+				fmt.Println(err.Error(), "获取配置文件失败")
+			}
+		}
 	}
 }
