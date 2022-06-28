@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/oaago/component/config"
+	"github.com/oaago/component/logx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -27,6 +28,10 @@ var DBS = DBSType{}
 var Err error
 
 func init() {
+	enable := config.Op.GetBool("mysql.enable")
+	if !enable {
+		return
+	}
 	mapKeys := config.Op.GetStringMapString("mysql")
 	if len(mapKeys) == 0 {
 		return
@@ -107,6 +112,7 @@ func NewConnect(mode string) (*gorm.DB, string) {
 	if err != nil {
 		panic("连接数据库失败, error=" + err.Error())
 	}
+	logx.Logger.Info("mysql 连接成功" + dsn)
 	sqlDB.SetMaxIdleConns(20)   //空闲连接数
 	sqlDB.SetMaxOpenConns(1000) //最大连接数
 	sqlDB.SetConnMaxIdleTime(time.Hour)

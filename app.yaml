@@ -5,21 +5,34 @@ server:
   version: 1.0
   weight: 1
 etcd:
-  addr: 127.0.0.1:2379
+  enable: true
+  addr: 0.0.0.0:2379
 mysql:
-  default: root:root@tcp(127.0.0.1:3306)/a
-  b: root:root@tcp(121.40.183.33:3308)/b
-  c: root:root@tcp(121.40.183.33:3308)/c
+  enable: true
+  default: root:root@tcp(127.0.0.1:3306)/nacos_devtest
 nacos:
-  ipaddr: ops.laodianhuang.cn
+  ipaddr: 127.0.0.1:8848
   logdir: ./nacos
   cachedir: ./nacos
   dataid: vip-work
   group: vip-work
+kafka:
+  consumer:
+    enable: true
+    nodes:
+      - 0.0.0.0:9093
+    topic:
+      - TestComposeTopic
+    groupid: qqqq
+  producer:
+    enable: true
+    nodes:
+      - 0.0.0.0:9093
+    topic: TestComposeTopic
 logger:
   path: ./logs
   name: vip-work
 redis:
-  addr: 121.40.183.33:6937
-  password: TBQ1pCChcKI4OgkSts
+  enable: true
+  addr: 0.0.0.0:6379
   db: 14

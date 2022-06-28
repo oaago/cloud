@@ -1,40 +1,44 @@
 package kafka
 
-// import (
-// 	"encoding/json"
-// 	"time"
+import (
+	"context"
+	"fmt"
+	"time"
 
-// 	"github.com/Shopify/sarama"
-// 	cluster "github.com/bsm/sarama-cluster"
-// 	"github.com/oaago/component/logx"
-// )
+	"github.com/Shopify/sarama"
+)
 
-// func NewConsumer(callback ConsumerCallback) {
-// 	consumer := ConsumerOptions
-// 	config := cluster.NewConfig()
-// 	config.Consumer.Return.Errors = true
-// 	config.Group.Return.Notifications = true
-// 	config.Consumer.Offsets.CommitInterval = 1 * time.Second
-// 	config.Consumer.Offsets.Initial = sarama.OffsetOldest //初始从最新的offset开始
-// 	var err error
-// 	ConsumerGroup, err = cluster.NewConsumer(consumer.Nodes, consumer.GroupId, consumer.Topic, config)
-// 	defer ConsumerGroup.Close()
-// 	if err != nil {
-// 		logx.Logger.Info(err.Error())
-// 		return
-// 	}
-// 	go func() {
-// 		for err := range ConsumerGroup.Errors() {
-// 			logx.Logger.Error(err.Error())
-// 		}
-// 	}()
-// 	go func() {
-// 		for note := range ConsumerGroup.Notifications() {
-// 			content, _ := json.Marshal(note)
-// 			logx.Logger.Info(string(content))
-// 		}
-// 	}()
-// 	for msg := range ConsumerGroup.Messages() {
-// 		callback(msg, ConsumerGroup)
-// 	}
-// }
+type msgConsumerGroup struct{}
+
+func (msgConsumerGroup) Setup(_ sarama.ConsumerGroupSession) error   { return nil }
+func (msgConsumerGroup) Cleanup(_ sarama.ConsumerGroupSession) error { return nil }
+func (h msgConsumerGroup) ConsumeClaim(sess sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
+	for msg := range claim.Messages() {
+		fmt.Printf("%s Message topic:%q partition:%d offset:%d  value:%s\n", msg.Topic, msg.Partition, msg.Offset, string(msg.Value))
+		sess.MarkMessage(msg, "")
+	}
+	return nil
+}
+
+var handler msgConsumerGroup
+
+func NewConsumer(callback ConsumerCallback) {
+	consume := ConsumerOptions
+	config := sarama.NewConfig()
+	config.Consumer.Return.Errors = true
+	config.Consumer.Offsets.CommitInterval = 1 * time.Second
+	config.Consumer.Offsets.Initial = sarama.OffsetOldest //初始从最新的offset开始
+	var err error
+	consumer, err := sarama.NewConsumerGroup(consume.Nodes, consume.GroupId, config)
+	if err != nil {
+		fmt.Printf("consumer_test create consumer error %s\n", err.Error())
+		return
+	}
+	//defer consumer.Close()
+	for {
+		err := consumer.Consume(context.Background(), []string{"testAutoSyncOffset"}, handler)
+		if err != nil {
+			fmt.Errorf(err.Error())
+		}
+	}
+}

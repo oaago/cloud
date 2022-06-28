@@ -23,10 +23,10 @@ func init() {
 		fmt.Println(e)
 	})
 	if err := Op.ReadInConfig(); err != nil {
-		if len(os.Args) > 2 {
-			if os.Args[0] != "oaacli" {
-				fmt.Println(err.Error(), "获取配置文件失败")
-			}
+		if len(os.Args) > 2 && os.Args[0] == "oaacli" {
+			fmt.Println(err.Error(), "请忽略")
+		} else {
+			fmt.Errorf(err.Error(), "获取配置文件失败")
 		}
 	}
 }

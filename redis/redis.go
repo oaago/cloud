@@ -28,6 +28,10 @@ var RedisOptions = &RedisType{}
 var RedisClient = &Cli{}
 
 func init() {
+	enable := config.Op.GetBool("redis.enable")
+	if !enable {
+		return
+	}
 	redisStr := config.Op.GetStringMapString("redis")
 	RedisOptions.DB, _ = strconv.Atoi(redisStr["db"])
 	RedisOptions.Addr = redisStr["addr"]
@@ -45,13 +49,12 @@ func (op *RedisType) NewRedis() *Cli {
 		ReadTimeout: time.Second * time.Duration(10),
 	})
 	redisCli.Name = op.Name
-	pong, err := redisCli.Client.Ping().Result()
+	_, err := redisCli.Client.Ping().Result()
 	if err != nil {
 		logx.Logger.Info("redis连接异常", err)
 		return nil
 	} else {
 		logx.Logger.Info("redis连接成功")
-		logx.Logger.Info(pong)
 	}
 	return redisCli
 }

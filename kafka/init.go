@@ -2,10 +2,7 @@ package kafka
 
 import (
 	"encoding/json"
-
 	"github.com/Shopify/sarama"
-
-	// cluster "github.com/bsm/sarama-cluster"
 	"github.com/oaago/component/config"
 )
 
@@ -33,21 +30,27 @@ type Consumer struct {
 	GroupId string   `yaml:"groupId"`
 }
 
-// var ConsumerGroup *cluster.Consumer
 var ConsumerOptions = &Consumer{}
 var ProducerOptions = &Producer{}
 
-var ProducerList *ProducerType
+var ProducerList = &ProducerType{}
 
-// type ConsumerCallback func(*sarama.ConsumerMessage, *cluster.Consumer)
+type ConsumerCallback func(*sarama.ConsumerMessage, *sarama.Consumer)
 
 func init() {
-	consumerStr := config.Op.GetString("kafka.consumer")
-	producerStr := config.Op.GetString("kafka.producer")
-	if len(consumerStr) > 0 {
-		json.Unmarshal([]byte(consumerStr), ConsumerOptions)
+	consumerEnable := config.Op.GetBool("kafka.consumer.enable")
+	producerEnable := config.Op.GetBool("kafka.producer.enable")
+	if consumerEnable {
+		consumerStr := config.Op.GetStringMapStringSlice("kafka.consumer")
+		marshal, err := json.Marshal(consumerStr)
+		if err != nil {
+			return
+		}
+		json.Unmarshal(marshal, &ConsumerOptions)
 	}
-	if len(producerStr) > 0 {
-		json.Unmarshal([]byte(producerStr), ProducerOptions)
+	if producerEnable {
+		producerStr := config.Op.GetStringMap("kafka.producer")
+		marshal, _ := json.Marshal(producerStr)
+		json.Unmarshal(marshal, ProducerOptions)
 	}
 }

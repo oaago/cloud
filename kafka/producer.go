@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/Shopify/sarama"
-	"github.com/tidwall/gjson"
 	"github.com/oaago/component/logx"
+	"github.com/tidwall/gjson"
 )
 
 func NewProducer(mode string) *ProducerType {
@@ -13,7 +13,7 @@ func NewProducer(mode string) *ProducerType {
 	p := ProducerList
 	config := sarama.NewConfig()
 	config.Producer.RequiredAcks = sarama.WaitForAll // 发送完数据需要leader和follow都确认
-	// config.Producer.Partitioner = sarama.NewRandomPartitioner // 随机分配分区 partition
+	//config.Producer.Partitioner = sarama.NewRandomPartitioner // 随机分配分区 partition
 	config.Producer.Partitioner = sarama.NewManualPartitioner // 人工指定分区
 	config.Producer.Return.Successes = true                   // 成功交付的消息将在success channel返回
 	// 创建生产者，连接kafka
@@ -34,6 +34,7 @@ func NewProducer(mode string) *ProducerType {
 			return Producers
 		}
 	}
+	logx.Logger.Info("kafka producer 初始化成功", config)
 	return p
 }
 

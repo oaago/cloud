@@ -1,13 +1,13 @@
 package nacos
 
 import (
-	"encoding/json"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"github.com/oaago/component/config"
+	"github.com/oaago/component/logx"
 )
 
 type NacosType struct {
@@ -44,14 +44,19 @@ var pd = map[string]string{
 var ServerEnv string
 
 func init() {
-	nacosStr := config.Op.GetString("kafka.nacos")
+	enable := config.Op.GetBool("nacos.enable")
+	if !enable {
+		return
+	}
 	NacosClient.ServiceName = config.Op.GetString("server.name")
 	NacosClient.Env = config.Op.GetString("server.env")
 	NacosClient.DataId = NacosClient.ServiceName
 	NacosClient.Group = NacosClient.ServiceName
-	NacosClient.IpAddr = "ops.laodianhuang.cn"
-	json.Unmarshal([]byte(nacosStr), NacosClient)
+	NacosClient.IpAddr = config.Op.GetString("nacos.ipaddr")
 	NacosClient.Cluster = NacosClient.Env + "-" + NacosClient.ServiceName
+	if config.Op.GetString("nacos.ipaddr") != "" {
+		NewNacos()
+	}
 }
 func NewNacos() *NacosType {
 	NacosClient.Sc = []constant.ServerConfig{
@@ -80,5 +85,6 @@ func NewNacos() *NacosType {
 			ServerConfigs: NacosClient.Sc,
 		},
 	)
+	logx.Logger.Info("nacos 连接成功", NacosClient)
 	return NacosClient
 }

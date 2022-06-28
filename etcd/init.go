@@ -34,5 +34,5 @@ func init() {
 		// handle error!
 		logx.Logger.Error("connect to etcd failed, err:%v\n", err)
 	}
-	logx.Logger.Info("connect to etcd success")
+	logx.Logger.Info("etcd 连接成功")
 }
