@@ -1,4 +1,4 @@
-module github.com/oaago/component
+module github.com/oaago/cloud
 
 go 1.18
 
@@ -28,7 +28,6 @@ require (
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
-	github.com/bsm/sarama-cluster v2.1.15+incompatible // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect

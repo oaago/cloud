@@ -2,8 +2,8 @@ package etcd
 
 import (
 	"encoding/json"
-	"github.com/oaago/component/config"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/config"
+	"github.com/oaago/cloud/logx"
 	"go.etcd.io/etcd/client/v3"
 	"time"
 )

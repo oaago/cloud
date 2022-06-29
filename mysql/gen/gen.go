@@ -1,7 +1,7 @@
 package gen
 
 import (
-	"github.com/oaago/component/mysql"
+	"github.com/oaago/cloud/mysql"
 	"gorm.io/gen"
 )
 

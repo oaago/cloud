@@ -1,8 +1,8 @@
 package cache
 
 import (
-	"github.com/oaago/component/logx"
-	"github.com/oaago/component/redis"
+	"github.com/oaago/cloud/logx"
+	"github.com/oaago/cloud/redis"
 	"sync"
 	"time"
 )

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/oaago/component/config"
-	_ "github.com/oaago/component/preload"
+	"github.com/oaago/cloud/config"
+	_ "github.com/oaago/cloud/preload"
 )
 
 func main() {

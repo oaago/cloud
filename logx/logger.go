@@ -1,7 +1,7 @@
 package logx
 
 import (
-	"github.com/oaago/component/config"
+	"github.com/oaago/cloud/config"
 	"os"
 	"strings"
 

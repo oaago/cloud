@@ -3,7 +3,7 @@ package kafka
 import (
 	"encoding/json"
 	"github.com/Shopify/sarama"
-	"github.com/oaago/component/config"
+	"github.com/oaago/cloud/config"
 )
 
 type KafkaType struct {

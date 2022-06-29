@@ -3,8 +3,8 @@ package oss
 import (
 	"encoding/json"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/oaago/component/config"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/config"
+	"github.com/oaago/cloud/logx"
 )
 
 type AliyunType struct {

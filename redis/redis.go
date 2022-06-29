@@ -2,8 +2,8 @@ package redis
 
 import (
 	"github.com/go-redis/redis"
-	"github.com/oaago/component/config"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/config"
+	"github.com/oaago/cloud/logx"
 	"strconv"
 	"time"
 )

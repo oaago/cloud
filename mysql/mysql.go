@@ -3,8 +3,8 @@ package mysql
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/oaago/component/config"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/config"
+	"github.com/oaago/cloud/logx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

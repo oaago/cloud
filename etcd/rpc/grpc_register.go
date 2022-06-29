@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/logx"
 	"time"
 
 	uuid "github.com/satori/go.uuid"

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/ghodss/yaml"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/oaago/component/logx"
-	"github.com/oaago/component/op"
+	"github.com/oaago/cloud/logx"
+	"github.com/oaago/cloud/op"
 )
 
 func GetNacosConfig(ini *NacosType) *op.Config {

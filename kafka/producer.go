@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Shopify/sarama"
-	"github.com/oaago/component/logx"
+	"github.com/oaago/cloud/logx"
 	"github.com/tidwall/gjson"
 )
 

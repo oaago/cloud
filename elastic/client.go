@@ -2,8 +2,8 @@ package elastic
 
 import (
 	"encoding/json"
+	"github.com/oaago/cloud/config"
 	elastics "github.com/olivere/elastic/v7"
-	"github.com/oaago/component/config"
 )
 
 type elasticType struct {

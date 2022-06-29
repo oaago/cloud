@@ -2,13 +2,13 @@ package op
 
 import (
 	"fmt"
-	"github.com/oaago/component/config"
-	"github.com/oaago/component/elastic"
-	"github.com/oaago/component/etcd"
-	"github.com/oaago/component/kafka"
-	"github.com/oaago/component/logx"
-	"github.com/oaago/component/oss"
-	"github.com/oaago/component/redis"
+	"github.com/oaago/cloud/config"
+	"github.com/oaago/cloud/elastic"
+	"github.com/oaago/cloud/etcd"
+	"github.com/oaago/cloud/kafka"
+	"github.com/oaago/cloud/logx"
+	"github.com/oaago/cloud/oss"
+	"github.com/oaago/cloud/redis"
 )
 
 type Nacos struct {
