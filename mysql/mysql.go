@@ -36,10 +36,12 @@ func init() {
 	if len(mapKeys) == 0 {
 		return
 	}
-	for i, _ := range mapKeys {
-		mysql, _ := NewConnect(i)
-		// 每次挂载最后一个 到上面
-		DB = mysql
+	for i, k := range mapKeys {
+		if k != "enable" {
+			mysql, _ := NewConnect(i)
+			// 每次挂载最后一个 到上面
+			DB = mysql
+		}
 	}
 }
 
