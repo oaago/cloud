@@ -28,11 +28,11 @@ type EtcdType struct {
 var Etcd = &EtcdType{}
 
 func init() {
-	endpoints := config.Op.GetStringSlice("etcd.endpoints")
+	endpoint := config.Op.GetStringSlice("etcd.endpoints")
 	enable := config.Op.GetBool("etcd.enable")
-	if len(endpoints) > 0 && enable {
+	if len(endpoint) > 0 && enable {
 		client, err := clientv3.New(clientv3.Config{
-			Endpoints:   endpoints,
+			Endpoints:   endpoint,
 			DialTimeout: 3 * time.Second,
 			//Username:    config.Op.GetString("etcd.username"),
 			//Password:    config.Op.GetString("etcd.password"),
