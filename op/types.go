@@ -33,7 +33,7 @@ type Server struct {
 type Docker struct {
 	Harbor struct {
 		Url string `json:"url"`
-	}
+	} `json:"harbor"`
 }
 
 type Config struct {
@@ -46,6 +46,7 @@ type Config struct {
 	Elastic elastic.ElasticType `json:"elastic"`
 	OSS     oss.AliyunType      `json:"oss"`
 	Etcd    rpc.EtcdType        `json:"etcd"`
+	Docker  `json:"docker"`
 	UCSDK   struct {
 		AuthServerURL string `yaml:"authServerURL" json:"auth_server_url,omitempty"`
 		ClientID      string `yaml:"clientID" json:"client_id,omitempty"`
