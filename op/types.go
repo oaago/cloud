@@ -2,9 +2,10 @@ package op
 
 import (
 	"fmt"
+	"github.com/oaago/cloud/etcd/rpc"
+
 	"github.com/oaago/cloud/config"
 	"github.com/oaago/cloud/elastic"
-	"github.com/oaago/cloud/etcd"
 	"github.com/oaago/cloud/kafka"
 	"github.com/oaago/cloud/logx"
 	"github.com/oaago/cloud/oss"
@@ -21,11 +22,12 @@ type Nacos struct {
 }
 
 type Server struct {
-	Name    string `yaml:"name"`
-	Port    int    `yaml:"port"`
-	Env     string `yaml:"env"`
-	Version string `json:"version"` //服务版本
-	Weight  int64  `json:"weight"`  //服务权重
+	Name     string `yaml:"name"`
+	Port     int    `yaml:"port"`
+	Env      string `yaml:"env"`
+	Version  string `json:"version"` //服务版本
+	Weight   int64  `json:"weight"`  //服务权重
+	BasePath string `yaml:"basePath"`
 }
 
 type Config struct {
@@ -37,7 +39,7 @@ type Config struct {
 	Logger  logx.LoggerType     `json:"logger"`
 	Elastic elastic.ElasticType `json:"elastic"`
 	OSS     oss.AliyunType      `json:"oss"`
-	Etcd    etcd.EtcdType       `json:"etcd"`
+	Etcd    rpc.EtcdType        `json:"etcd"`
 	UCSDK   struct {
 		AuthServerURL string `yaml:"authServerURL" json:"auth_server_url,omitempty"`
 		ClientID      string `yaml:"clientID" json:"client_id,omitempty"`
@@ -51,6 +53,10 @@ type Config struct {
 var ConfigData *Config
 
 func init() {
-	config.Op.Unmarshal(&ConfigData)
+	err := config.Op.Unmarshal(&ConfigData)
+	if err != nil {
+		fmt.Errorf(err.Error())
+		return
+	}
 	fmt.Println(ConfigData)
 }

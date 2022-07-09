@@ -6,9 +6,8 @@ server:
   weight: 1
 etcd:
   enable: true
-  addr: 0.0.0.0:2379
+  endpoints: 127.0.0.1:2379
 mysql:
-  enable: true
   default: root:root@tcp(127.0.0.1:3306)/nacos_devtest
 nacos:
   ipaddr: 127.0.0.1:8848

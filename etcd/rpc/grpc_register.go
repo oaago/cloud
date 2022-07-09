@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"fmt"
+	"github.com/oaago/cloud/config"
 	"github.com/oaago/cloud/logx"
 	"time"
 
@@ -11,27 +12,41 @@ import (
 	"go.etcd.io/etcd/client/v3/naming/endpoints"
 )
 
-var client *clientv3.Client
+//var client *clientv3.Client
 
 const (
 	prefix = "service"
 )
 
+type EtcdType struct {
+	client   *clientv3.Client
+	Username string
+	Password string
+}
+
+var Etcd = &EtcdType{}
+
 func init() {
-	var err error
-	client, err = clientv3.New(clientv3.Config{
-		Endpoints:   []string{"localhost:2379"},
-		DialTimeout: 5 * time.Second,
-	})
-	if err != nil {
-		panic(err)
+	endpoints := config.Op.GetStringSlice("etcd.endpoints")
+	enable := config.Op.GetBool("etcd.enable")
+	if len(endpoints) > 0 && enable {
+		client, err := clientv3.New(clientv3.Config{
+			Endpoints:   endpoints,
+			DialTimeout: 3 * time.Second,
+			//Username:    config.Op.GetString("etcd.username"),
+			//Password:    config.Op.GetString("etcd.password"),
+		})
+		if err != nil {
+			panic(err)
+		}
+		Etcd.client = client
 	}
 }
 
 func Register(ctx context.Context, serviceName, addr string) error {
 	logx.Logger.Info("Try register to etcd ...")
 	// 创建一个租约
-	lease := clientv3.NewLease(client)
+	lease := clientv3.NewLease(Etcd.client)
 	cancelCtx, cancel := context.WithTimeout(ctx, time.Second*3)
 	defer cancel()
 	leaseResp, err := lease.Grant(cancelCtx, 3)
@@ -44,7 +59,7 @@ func Register(ctx context.Context, serviceName, addr string) error {
 		return err
 	}
 
-	em, err := endpoints.NewManager(client, prefix)
+	em, err := endpoints.NewManager(Etcd.client, prefix)
 	if err != nil {
 		return err
 	}
@@ -96,7 +111,7 @@ func keepRegister(ctx context.Context, leaseChannel <-chan *clientv3.LeaseKeepAl
 				}
 			case <-ctx.Done():
 				cleanFunc()
-				client.Close()
+				Etcd.client.Close()
 				return
 			}
 		}

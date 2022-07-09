@@ -38,7 +38,7 @@ func NewProducer(mode string) *ProducerType {
 	return p
 }
 
-func (p *ProducerType) SyncSendMessage(content string, topic string) {
+func (p *ProducerType) SyncSendMessage(content string, topic string) *sarama.ProducerMessage {
 	msg := &sarama.ProducerMessage{}
 	msg.Topic = ProducerOptions.Topic
 	if topic != "" {
@@ -51,9 +51,10 @@ func (p *ProducerType) SyncSendMessage(content string, topic string) {
 	pid, offset, err := p.SyncProducer.SendMessage(msg)
 	if err != nil {
 		logx.Logger.Info(err.Error())
-		return
+		return msg
 	}
 	fmt.Printf("pid:%v offset:%v\n", pid, offset) //分区id，偏移id
+	return msg
 }
 
 func (p *ProducerType) Close() {

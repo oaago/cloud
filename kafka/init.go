@@ -7,8 +7,8 @@ import (
 )
 
 type KafkaType struct {
-	Consumer
-	Producer
+	Consumer `json:"consumer"`
+	Producer `json:"producer"`
 }
 
 type ProducerType struct {
