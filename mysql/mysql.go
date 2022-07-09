@@ -29,7 +29,8 @@ var Err error
 
 func init() {
 	enable := config.Op.GetBool("mysql.enable")
-	if !enable {
+	arg := os.Args
+	if !enable || arg[0] == "oaago" {
 		return
 	}
 	mapKeys := config.Op.GetStringMapString("mysql")
@@ -60,14 +61,21 @@ func NotConfigConnect(url string) *gorm.DB {
 			Colorful:                  false,       // 禁用彩色打印
 		},
 	)
-	DB, Err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+	var err error
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		DisableAutomaticPing: true,
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: "",
 		},
 		Logger: newLogger,
 	})
+	if err != nil {
+		panic("连接数据库失败, error=" + err.Error())
+	}
 	sqlDB, err := DB.Debug().DB()
+	if err != nil {
+		panic("db连接数据库失败, error=" + err.Error())
+	}
 	sqlDB.SetMaxIdleConns(20)   //空闲连接数
 	sqlDB.SetMaxOpenConns(1000) //最大连接数
 	sqlDB.SetConnMaxIdleTime(time.Hour)
@@ -103,16 +111,20 @@ func NewConnect(mode string) (*gorm.DB, string) {
 		panic("连接数据库地址不正确")
 	}
 	dbl.Name = dns[1]
-	dbl.DB, Err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+	var err error
+	dbl.DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		DisableAutomaticPing: true,
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
 		Logger: newLogger,
 	})
-	sqlDB, err := dbl.DB.DB()
 	if err != nil {
 		panic("连接数据库失败, error=" + err.Error())
+	}
+	sqlDB, err := dbl.DB.DB()
+	if err != nil {
+		panic("db连接数据库失败, error=" + err.Error())
 	}
 	logx.Logger.Info("mysql 连接成功" + dsn)
 	sqlDB.SetMaxIdleConns(20)   //空闲连接数
