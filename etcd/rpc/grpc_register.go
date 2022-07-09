@@ -19,9 +19,10 @@ const (
 )
 
 type EtcdType struct {
-	client   *clientv3.Client
-	Username string
-	Password string
+	client    *clientv3.Client
+	Endpoints []string
+	Username  string
+	Password  string
 }
 
 var Etcd = &EtcdType{}
