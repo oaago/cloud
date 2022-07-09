@@ -1,5 +1,5 @@
 server:
-  name: vip-work
+  name: demo
   port: 9932
   env: local
   version: 1.0
@@ -13,8 +13,8 @@ nacos:
   ipaddr: 127.0.0.1:8848
   logdir: ./nacos
   cachedir: ./nacos
-  dataid: vip-work
-  group: vip-work
+  dataid: demo
+  group: demo
 kafka:
   consumer:
     enable: true
