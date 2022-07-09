@@ -30,6 +30,12 @@ type Server struct {
 	BasePath string `yaml:"basePath"`
 }
 
+type Docker struct {
+	Harbor struct {
+		Url string `json:"url"`
+	}
+}
+
 type Config struct {
 	Server  `json:"server"`
 	Nacos   `json:"nacos"`
