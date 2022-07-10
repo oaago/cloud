@@ -18,9 +18,9 @@ import (
 var Logger *zap.SugaredLogger
 
 type LoggerType struct {
-	Path        string `json:"path,omitempty"`
-	Name        string `json:"name,omitempty"`
-	EnableKafka bool   `json:"enablekafka,omitempty"`
+	Path        string `json:"path"`
+	Name        string `json:"name"`
+	EnableKafka bool   `json:"enablekafka"`
 }
 
 var Logx *zap.Logger
