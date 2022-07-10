@@ -29,6 +29,7 @@ kafka:
       - 0.0.0.0:9093
     topic: TestComposeTopic
 logger:
+  enablekafka: true
   path: ./logs
   name: vip-work
 redis:
