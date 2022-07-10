@@ -30,10 +30,11 @@ type Server struct {
 	BasePath string `yaml:"basePath"`
 }
 
+type Harbor struct {
+	Url string `json:"url"`
+}
 type Docker struct {
-	Harbor struct {
-		Url string `json:"url"`
-	} `json:"harbor"`
+	Harbor `json:"harbor"`
 }
 
 type Config struct {
