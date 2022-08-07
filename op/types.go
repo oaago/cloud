@@ -24,6 +24,7 @@ type Nacos struct {
 type Server struct {
 	Name     string `yaml:"name"`
 	Port     int    `yaml:"port"`
+	RpcPort  int    `yaml:"rpcPort"`
 	Env      string `yaml:"env"`
 	Version  string `json:"version"` //服务版本
 	Weight   int64  `json:"weight"`  //服务权重
@@ -38,22 +39,16 @@ type Docker struct {
 }
 
 type Config struct {
-	Server  `json:"server"`
-	Nacos   `json:"nacos"`
-	Kafka   kafka.KafkaType     `json:"kafka"`
-	Mysql   map[string]string   `json:"mysql,omitempty"`
-	Redis   redis.RedisType     `json:"redis"`
-	Logger  logx.LoggerType     `json:"logger"`
-	Elastic elastic.ElasticType `json:"elastic"`
-	OSS     oss.AliyunType      `json:"oss"`
-	Etcd    rpc.EtcdType        `json:"etcd"`
-	Docker  `json:"docker"`
-	UCSDK   struct {
-		AuthServerURL string `yaml:"authServerURL" json:"auth_server_url,omitempty"`
-		ClientID      string `yaml:"clientID" json:"client_id,omitempty"`
-		ClientSecret  string `yaml:"clientSecret" json:"client_secret,omitempty"`
-		RedirectURL   string `yaml:"redirectURL" json:"redirect_url,omitempty"`
-	} `json:"ucsdk"`
+	Server   `json:"server"`
+	Nacos    `json:"nacos"`
+	Kafka    kafka.KafkaType     `json:"kafka"`
+	Mysql    map[string]string   `json:"mysql,omitempty"`
+	Redis    redis.RedisType     `json:"redis"`
+	Logger   logx.LoggerType     `json:"logger"`
+	Elastic  elastic.ElasticType `json:"elastic"`
+	OSS      oss.AliyunType      `json:"oss"`
+	Etcd     rpc.EtcdType        `json:"etcd"`
+	Docker   `json:"docker"`
 	CodeMap  map[int]string         `json:"code_map,omitempty"`
 	SelfData map[string]interface{} `json:"self_data,omitempty"`
 }
