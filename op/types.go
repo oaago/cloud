@@ -41,6 +41,7 @@ type Docker struct {
 type Config struct {
 	Server   `json:"server"`
 	Nacos    `json:"nacos"`
+	Socket   `json:"socket"`
 	Kafka    kafka.KafkaType     `json:"kafka"`
 	Mysql    map[string]string   `json:"mysql,omitempty"`
 	Redis    redis.RedisType     `json:"redis"`
@@ -51,6 +52,12 @@ type Config struct {
 	Docker   `json:"docker"`
 	CodeMap  map[int]string         `json:"code_map,omitempty"`
 	SelfData map[string]interface{} `json:"self_data,omitempty"`
+}
+
+type Socket struct {
+	Enable  bool
+	BaseUrl string
+	Types   string
 }
 
 var ConfigData *Config
