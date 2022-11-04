@@ -22,13 +22,14 @@ type Nacos struct {
 }
 
 type Server struct {
-	Name     string `yaml:"name"`
-	Port     int    `yaml:"port"`
-	RpcPort  int    `yaml:"rpcPort"`
-	Env      string `yaml:"env"`
-	Version  string `json:"version"` //服务版本
-	Weight   int64  `json:"weight"`  //服务权重
-	BasePath string `yaml:"basePath"`
+	Name     string   `yaml:"name"`
+	Port     int      `yaml:"port"`
+	RpcPort  int      `yaml:"rpcPort"`
+	Env      string   `yaml:"env"`
+	Version  string   `json:"version"` //服务版本
+	Weight   int64    `json:"weight"`  //服务权重
+	BasePath string   `yaml:"basePath"`
+	Cors     []string `yaml:"cors"`
 }
 
 type Harbor struct {
