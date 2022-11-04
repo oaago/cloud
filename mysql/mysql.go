@@ -29,8 +29,7 @@ var Err error
 
 func init() {
 	enable := config.Op.GetBool("mysql.enable")
-	arg := os.Args
-	if !enable || arg[0] == "oaago" {
+	if !enable {
 		return
 	}
 	mapKeys := config.Op.GetStringMapString("mysql")

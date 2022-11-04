@@ -4,7 +4,6 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/oaago/cloud/config"
 	"github.com/oaago/cloud/logx"
-	"os"
 	"strconv"
 	"time"
 )
@@ -30,8 +29,7 @@ var RedisClient = &Cli{}
 
 func init() {
 	enable := config.Op.GetBool("redis.enable")
-	arg := os.Args
-	if !enable || arg[0] == "oaago" {
+	if !enable {
 		return
 	}
 	redisStr := config.Op.GetStringMapString("redis")
